@@ -13,7 +13,7 @@ async def poster():
 
   async with Client('new',api_id=api_id, api_hash=api_hash, phone_number=phone , password=passcode) as app:
     s = await app.export_session_string()
-    await app.send_message("me", str(s))
+    r = await app.send_message("me", str(s))
 
   
 
