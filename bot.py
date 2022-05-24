@@ -1,6 +1,5 @@
-import asyncio
 import os 
-
+import traceback
 from pyrogram import Client
 
 phone = str(os.environ.get('PHONE', ''))
@@ -8,21 +7,18 @@ api_id = int(os.environ.get('API_ID', 0))
 api_hash = str(os.environ.get('API_HASH', ''))
 passcode = str(os.environ.get('PASSWORD', ''))
 
-async def poster():
+def poster():
 
+  try:
 
-  async with Client('new',api_id=api_id, api_hash=api_hash, phone_number=phone , password=passcode) as app:
-    s = await app.export_session_string()
-    r = await app.send_message("me", str(s))
-
+    with Client('new',api_id=api_id, api_hash=api_hash, phone_number=phone , password=passcode) as app:
+      s = app.export_session_string()
+      r = app.send_message("me", str(s))
   
-
-def main():
+  except:
+    print(traceback.format_exc())
   
-  loop = asyncio.get_event_loop()
-  loop.run_until_complete(poster())
-  loop.close()
 
 
 if __name__ == '__main__':
-  main()
+  poster()
